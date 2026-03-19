@@ -3,7 +3,7 @@
 // =============================================
 
 // ===== CONFIG =====
-const APPS_SCRIPT_URL = 'GANTI_DENGAN_URL_APPS_SCRIPT_KAMU';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqc0-MBl3BJHhbOZ4jwsox-gaAX2S_VIfhG2jedrqHeqSrFdsBCr75iwLA0dgGiNP_-A/exec';
 // Contoh: 'https://script.google.com/macros/s/AKfyc.../exec'
 
 // ===== STATE =====
@@ -156,7 +156,7 @@ async function submitTransaksi() {
 
   // Kirim ke Google Sheets
   try {
-    if (APPS_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbzqc0-MBl3BJHhbOZ4jwsox-gaAX2S_VIfhG2jedrqHeqSrFdsBCr75iwLA0dgGiNP_-A/exec') {
+    if (true) {
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
