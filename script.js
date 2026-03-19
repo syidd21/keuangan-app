@@ -156,7 +156,7 @@ async function submitTransaksi() {
 
   // Kirim ke Google Sheets
   try {
-    if (APPS_SCRIPT_URL !== '1u9vzHhyTdtZj4GvMbizSbCywEDIDJLUpbo8VWiwhO39Trk89LAMJb0gi') {
+    if (APPS_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbzqc0-MBl3BJHhbOZ4jwsox-gaAX2S_VIfhG2jedrqHeqSrFdsBCr75iwLA0dgGiNP_-A/exec') {
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
