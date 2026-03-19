@@ -162,6 +162,8 @@ async function submitTransaksi() {
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          action: 'save',
+          id: tx.id,
           tipe: tx.tipe,
           kategori: tx.kategori,
           nominal: tx.nominal,
@@ -299,11 +301,21 @@ function deleteTransaksi(id) {
     el.style.transform = 'translateX(40px)';
     el.style.transition = 'all 0.25s ease';
   }
-  setTimeout(() => {
+  setTimeout(async () => {
     transactions = transactions.filter(tx => tx.id !== id);
     saveLocal();
     renderAll();
     showToast('🗑️ Transaksi dihapus!', 'success');
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', id: id })
+      });
+    } catch(e) {
+      console.log('Gagal hapus dari Sheets:', e);
+    }
   }, 250);
 }
 
