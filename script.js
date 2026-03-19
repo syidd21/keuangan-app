@@ -3,7 +3,7 @@
 // =============================================
 
 // ===== CONFIG =====
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzqc0-MBl3BJHhbOZ4jwsox-gaAX2S_VIfhG2jedrqHeqSrFdsBCr75iwLA0dgGiNP_-A/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1oyshiDv-wKNfvk1CjLABNHZfYKbvjOoL8dDwILzf9qP3pBuANFEY6DX0qBIlEZdibg/exec';
 // Contoh: 'https://script.google.com/macros/s/AKfyc.../exec'
 
 // ===== STATE =====
