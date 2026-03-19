@@ -2,7 +2,7 @@
   "name": "Keuangan Rumah Tangga",
   "short_name": "Keuangan",
   "description": "Aplikasi manajemen keuangan rumah tangga berbasis PWA",
-  "start_url": "/index.html",
+  "start_url": "/keuangan-app/index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ffffff",
