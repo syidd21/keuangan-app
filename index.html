@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d9488" id="themeColorMeta" />
+  <meta name="description" content="Aplikasi Manajemen Keuangan Rumah Tangga" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Keuangan" />
+  <title>Keuangan Rumah Tangga</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Splash -->
+  <div class="splash" id="splash">
+    <div class="splash-content">
+      <div class="splash-icon">
+        <svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="32" fill="#0d9488"/><circle cx="32" cy="32" r="20" fill="rgba(255,255,255,0.15)"/><path d="M32 22v20M22 32h20" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
+      </div>
+      <div class="splash-title">Keuangan</div>
+      <div class="splash-sub">Rumah Tangga</div>
+      <div class="splash-dots">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Shell -->
+  <div class="app" id="app" style="display:none">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div>
+          <div class="header-greeting" id="greetingText">Selamat Pagi 👋</div>
+          <div class="header-date" id="headerDate"></div>
+        </div>
+        <button class="icon-btn" id="themeToggle" onclick="toggleTheme()" title="Dark Mode">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Pages -->
+    <main class="pages">
+
+      <!-- PAGE: HOME -->
+      <section class="page active" id="page-home">
+
+        <!-- Hero Saldo -->
+        <div class="hero">
+          <div class="hero-bg"></div>
+          <div class="hero-content">
+            <div class="hero-label">Total Saldo</div>
+            <div class="hero-amount" id="heroSaldo">Rp 0</div>
+            <div class="hero-row">
+              <div class="hero-item">
+                <div class="hero-item-label">
+                  <span class="dot-light"></span> Pemasukan
+                </div>
+                <div class="hero-item-val" id="heroIncome">Rp 0</div>
+              </div>
+              <div class="hero-sep"></div>
+              <div class="hero-item">
+                <div class="hero-item-label">
+                  <span class="dot-light red"></span> Pengeluaran
+                </div>
+                <div class="hero-item-val" id="heroExpense">Rp 0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Warning -->
+        <div class="warning-banner" id="warningBanner" style="display:none">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>Pengeluaran melebihi pemasukan!</span>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card-label">Catat Transaksi</div>
+        <div class="form-card">
+
+          <div class="type-toggle">
+            <button class="type-btn active income" id="btnIncome" onclick="setType('pemasukan')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+              Pemasukan
+            </button>
+            <button class="type-btn expense" id="btnExpense" onclick="setType('pengeluaran')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+              Pengeluaran
+            </button>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Nominal</label>
+            <div class="input-wrap prefix">
+              <span class="input-prefix">Rp</span>
+              <input type="text" inputmode="numeric" id="nominal" placeholder="0" class="input-field" oninput="formatNominal(this)" autocomplete="off" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Kategori</label>
+            <div class="input-wrap select">
+              <select id="kategori" class="input-field">
+                <option value="">— Pilih Kategori —</option>
+              </select>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Keterangan <small>(opsional)</small></label>
+            <input type="text" id="keterangan" placeholder="Mis: gaji bulan ini, makan siang..." class="input-field" autocomplete="off" />
+          </div>
+
+          <button class="submit-btn" id="submitBtn" onclick="submitTransaksi()">
+            <span id="submitText">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v14a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Simpan Transaksi
+            </span>
+            <div class="btn-spinner" id="btnSpinner" style="display:none">
+              <div class="spinner"></div>
+            </div>
+          </button>
+
+        </div>
+
+        <!-- Recent -->
+        <div class="section-header">
+          <div class="card-label" style="margin:0">Transaksi Terbaru</div>
+          <button class="link-btn" onclick="switchPage('riwayat')">Lihat Semua →</button>
+        </div>
+        <div class="tx-list" id="recentList">
+          <div class="empty-state">
+            <div class="empty-emoji">💸</div>
+            <div class="empty-title">Belum ada transaksi</div>
+            <div class="empty-desc">Catat transaksi pertamamu di atas!</div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- PAGE: RIWAYAT -->
+      <section class="page" id="page-riwayat">
+        <div class="page-title">Riwayat Transaksi</div>
+
+        <div class="filter-row">
+          <button class="chip active" onclick="filterTx('semua', this)">Semua</button>
+          <button class="chip" onclick="filterTx('pemasukan', this)">Pemasukan</button>
+          <button class="chip" onclick="filterTx('pengeluaran', this)">Pengeluaran</button>
+        </div>
+
+        <div class="tx-list" id="fullList">
+          <div class="empty-state">
+            <div class="empty-emoji">📋</div>
+            <div class="empty-title">Belum ada transaksi</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE: STATISTIK -->
+      <section class="page" id="page-statistik">
+        <div class="page-title">Statistik</div>
+
+        <div class="stat-row">
+          <div class="stat-card green">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </div>
+            <div>
+              <div class="stat-label">Pemasukan</div>
+              <div class="stat-val" id="statIncome">Rp 0</div>
+            </div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            </div>
+            <div>
+              <div class="stat-label">Pengeluaran</div>
+              <div class="stat-val" id="statExpense">Rp 0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-label">Kategori Terbesar</div>
+        <div id="categoryStats"></div>
+
+        <div class="card-label" style="margin-top:24px">Grafik 7 Hari Terakhir</div>
+        <div class="chart-card">
+          <canvas id="barChart" height="180"></canvas>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" id="nav-home" onclick="switchPage('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Beranda</span>
+      </button>
+      <button class="nav-btn" id="nav-riwayat" onclick="switchPage('riwayat')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>Riwayat</span>
+      </button>
+      <button class="nav-btn" id="nav-statistik" onclick="switchPage('statistik')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        <span>Statistik</span>
+      </button>
+    </nav>
+
+  </div><!-- /app -->
+
+  <!-- Toast -->
+  <div id="toastContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
