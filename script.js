@@ -156,7 +156,7 @@ async function submitTransaksi() {
 
   // Kirim ke Google Sheets
   try {
-    if (APPS_SCRIPT_URL !== 'GANTI_DENGAN_URL_APPS_SCRIPT_KAMU') {
+    if (APPS_SCRIPT_URL !== '1u9vzHhyTdtZj4GvMbizSbCywEDIDJLUpbo8VWiwhO39Trk89LAMJb0gi') {
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
