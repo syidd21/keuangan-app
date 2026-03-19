@@ -156,7 +156,7 @@ async function submitTransaksi() {
 
   // Kirim ke Google Sheets
   try {
-    if (APPS_SCRIPT_URL !== 'https://script.google.com/macros/s/AKfycbweNaQ7yYkaCVnVzT4qaMbCHFQGDhwvwMHxqiWlXjX5UMGZj2bLHOOGava7PBnt-Y6Odw/exec') {
+    if (APPS_SCRIPT_URL !== 'GANTI_DENGAN_URL_APPS_SCRIPT_KAMU') {
       await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -275,7 +275,7 @@ function txHTML(tx) {
   const amt = tx.tipe === 'pemasukan' ? '+' + formatRupiah(tx.nominal) : '-' + formatRupiah(tx.nominal);
   const sign = tx.tipe === 'pemasukan' ? 'income' : 'expense';
   return `
-    <div class="tx-item">
+    <div class="tx-item" id="tx-${tx.id}">
       <div class="tx-icon ${sign}">${emoji}</div>
       <div class="tx-body">
         <div class="tx-cat">${tx.kategori}</div>
@@ -285,7 +285,26 @@ function txHTML(tx) {
         <div class="tx-amt ${sign}">${amt}</div>
         <div class="tx-date">${tx.tanggalFmt || ''}</div>
       </div>
+      <button class="delete-btn" onclick="deleteTransaksi(${tx.id})">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
     </div>`;
+}
+
+function deleteTransaksi(id) {
+  if (!confirm('Hapus transaksi ini?')) return;
+  const el = document.getElementById('tx-' + id);
+  if (el) {
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(40px)';
+    el.style.transition = 'all 0.25s ease';
+  }
+  setTimeout(() => {
+    transactions = transactions.filter(tx => tx.id !== id);
+    saveLocal();
+    renderAll();
+    showToast('🗑️ Transaksi dihapus!', 'success');
+  }, 250);
 }
 
 // ===== FILTER =====

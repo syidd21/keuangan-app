@@ -512,3 +512,20 @@ input.input-field:focus {
 @media (min-width: 430px) {
   .app { border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
 }
+
+/* ============ DELETE BUTTON ============ */
+.delete-btn {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--red-soft);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-left: 8px;
+  transition: var(--transition);
+  opacity: 0;
+  transition: opacity 0.2s, background 0.2s;
+}
+.tx-item:hover .delete-btn,
+.tx-item:active .delete-btn { opacity: 1; }
+.delete-btn:hover { background: var(--red); }
+.delete-btn svg { width: 14px; height: 14px; color: var(--red); }
+.delete-btn:hover svg { color: white; }
